@@ -1,20 +1,19 @@
-const simplex = new SimplexNoise('seed');
+const simplex = new SimplexNoise();
 const ctx = document.querySelector("canvas").getContext("2d");
 
 // hyperparameters
 const SEED = Math.random();
 const WIDTH = 1200;
 const HEIGHT = 675;
-const DENSITY = 0.08;
+const DENSITY = 0.1;
 const K = 10; // iterations for poisson disc sampling
-const FRICTION = 0.5; // how much to reduce the velocity of the line during each iteration
 
 // computed values
 const R = 1 / DENSITY; // search radius for poisson disc sampling
 const CELLSIZE = R / Math.sqrt(2);
-const COLS = Math.floor(WIDTH / CELLSIZE);
-const ROWS = Math.floor(HEIGHT / CELLSIZE);
-const GRID = new Array(COLS * ROWS);
+const COLS = Math.ceil(WIDTH / CELLSIZE);
+const ROWS = Math.ceil(HEIGHT / CELLSIZE);
+const GRID = [...new Array(COLS * ROWS)].map(() => []);
 
 const getVectorMagnitude = ([dx, dy]) => Math.sqrt(dx * dx + dy * dy);
 
@@ -22,7 +21,7 @@ const distance = ([x1, y1], [x2, y2]) =>
     Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
 
 const getVectorAt = ([x, y]) => {
-    const angle = (simplex.noise2D(x / WIDTH, y / HEIGHT)) * Math.PI;
+    const angle = simplex.noise2D(x / WIDTH, y / HEIGHT) * Math.PI;
     const magnitude =
         (simplex.noise3D(x / WIDTH, y / HEIGHT, angle / (Math.PI * 2)) + 1) *
         CELLSIZE;
@@ -30,11 +29,7 @@ const getVectorAt = ([x, y]) => {
 };
 
 const getRandomArrayElement = (arr) => {
-    let index = Math.floor(Math.random() * arr.length);
-    while (arr[index] === undefined) {
-        index++;
-    }
-    return arr[index];
+    return arr[Math.floor(Math.random() * arr.length)];
 };
 
 const radialToCart = (angle, magnitude) => [
@@ -56,7 +51,8 @@ const getGridIndexFromPoint = (point) => {
     return coordsToIndex([x, y]);
 };
 
-const getPointsInNeighboringCells = ([i, j]) => {
+const getPointsInNeighboringCells = (point) => {
+    const [i, j] = getGridCellCoords(point);
     const neighbors = [];
     for (let x = -1; x <= 1; x++) {
         for (let y = -1; y <= 1; y++) {
@@ -68,69 +64,49 @@ const getPointsInNeighboringCells = ([i, j]) => {
             }
         }
     }
-    return neighbors;
+    return neighbors.flat();
 };
 
-const generateStartingPoints = () => {
-    const activeList = [];
-
-    // 1. put a random point in the grid and add it to the active list
-    const initialPoint = [Math.random() * WIDTH, Math.random() * HEIGHT];
-
-    GRID[coordsToIndex(getGridCellCoords(initialPoint))] = initialPoint;
-    activeList.push(initialPoint);
-
-    // 2. while there are still active points, pick a random point from the active list
-    while (activeList.length > 0) {
-        const randomActive = getRandomArrayElement(activeList);
-        // check up to K points around the random active point
-        let found = false;
-        for (let i = 0; i < K; i++) {
-            const randomVector = radialToCart(
-                Math.random() * Math.PI * 2,
-                R + Math.random() * R
-            );
-            const candidatePoint = [
-                randomActive[0] + randomVector[0],
-                randomActive[1] + randomVector[1],
-            ];
-            const candidateGridCell = getGridCellCoords(candidatePoint);
-            if (
-                candidatePoint[0] < 0 ||
-                candidatePoint[0] > WIDTH ||
-                candidatePoint[1] < 0 ||
-                candidatePoint[1] > HEIGHT
-            ) {
-                continue;
-            }
-            let pass = true;
-
-            if (GRID[coordsToIndex(getGridCellCoords(candidatePoint))]) {
-                continue;
-            }
-            for (const point of getPointsInNeighboringCells(
-                candidateGridCell
-            )) {
-                if (distance(point, candidatePoint) < R * 10) {
-                    pass = false;
-                    break;
-                }
-            }
-            if (pass) {
-                found = true;
-                GRID[coordsToIndex(candidateGridCell)] = candidatePoint;
-                activeList.push(candidatePoint);
-            }
-        }
-        if (!found) {
-            activeList.splice(activeList.indexOf(randomActive), 1);
+const checkForCloseNeighbor = (point, ignoreCurrentPath = false) => {
+    const neighbors = getPointsInNeighboringCells(point);
+    for (const neighbor of neighbors) {
+        if (ignoreCurrentPath && ctx.isPointInPath(neighbor[0], neighbor[1])) {
+            continue;
+        } else if (distance(neighbor, point) < R) {
+            return true;
         }
     }
+    return false;
+}
+
+const checkIfPointIsOutsideGrid = (point) => {
+    const [x, y] = point;
+    return x < 0 || x > WIDTH || y < 0 || y > HEIGHT;
 };
 
-generateStartingPoints();
+const getRandomPointWithinAnnulus = (point, distance) => {
+    const [x, y] = point;
+    const [dx, dy] = radialToCart(
+        Math.random() * Math.PI * 2,
+        distance + Math.random() * distance
+    );
+    return [x + dx, y + dy];
+};
 
-const drawGrid = () => {
+const drawGridLines = () => {
+    for (let i = 0; i <= COLS; i++) {
+        ctx.moveTo(i * CELLSIZE, 0);
+        ctx.lineTo(i * CELLSIZE, HEIGHT);
+    }
+    for (let j = 0; j <= ROWS; j++) {
+        ctx.moveTo(0, j * CELLSIZE);
+        ctx.lineTo(WIDTH, j * CELLSIZE);
+    }
+    ctx.strokeStyle = "rgba(0, 0, 0, 0.1)";
+    ctx.stroke();
+};
+
+const drawGridPoints = () => {
     for (let point of GRID) {
         if (point) {
             ctx.fillStyle = "green";
@@ -152,13 +128,41 @@ const drawVectors = () => {
     }
 };
 
-const drawFlowLine = (currentPoint, isFirst = true) => {
-    if (! currentPoint) return;
-    // set the start point as either the previous point or a random point in the grid
-    const thisPoint = currentPoint || getRandomArrayElement(GRID);
+const drawFlowLines = (seedPoint = undefined) => {
+    const activeList = [];
+    const startPoint = seedPoint || [Math.random() * WIDTH, Math.random() * HEIGHT];
+    activeList.push(startPoint);
+    while (activeList.length > 0 && activeList.length < GRID.length) {
+        const activePoint = getRandomArrayElement(activeList);
+        // try k times to find a new point
+        let found = false;
+        for (let i = 0; i < K; i++) {
+            // get a random candidate point within the annulus
+            const candidatePoint = getRandomPointWithinAnnulus(activePoint, R);
+            // check the neighbors of that candidate point
+            const tooClose = checkForCloseNeighbor(candidatePoint);
+            // if the candidate point is:
+            // 1. not too close to any other point
+            // 2. not out of bounds,
+            // add it to the active list
+            if (!tooClose && !checkIfPointIsOutsideGrid(candidatePoint)) {
+                found = true;
+                activeList.push(candidatePoint);
+                drawFlowLine(candidatePoint);
+                break;
+            }
+        }
+        // if no candidate point was found, remove the active point from the active list
+        if (!found) {
+            activeList.splice(activeList.indexOf(activePoint), 1);
+        }
+    }
+};
 
+const drawFlowLine = (thisPoint, isFirst = true) => {
     // if this is the first point, start the line
     if (isFirst) {
+        // make sure to add the start point to the grid
         ctx.beginPath();
         ctx.moveTo(thisPoint[0], thisPoint[1]);
     }
@@ -171,26 +175,30 @@ const drawFlowLine = (currentPoint, isFirst = true) => {
         thisPoint[0] + thisVector[0],
         thisPoint[1] + thisVector[1],
     ];
-    // draw the line
-    ctx.lineTo(nextPoint[0], nextPoint[1]);
-
-    // check the grid cells around the next point for points that are too close
-    const nextGridCell = getGridCellCoords(nextPoint);
-    for (const point of getPointsInNeighboringCells(nextGridCell)) {
-        if (distance(point, nextPoint) < R) {
-            GRID.splice(getGridIndexFromPoint(point), 1);
-        }
-    }
-    if ( nextPoint[0] < 0 || nextPoint[0] > WIDTH || nextPoint[1] < 0 || nextPoint[1] > HEIGHT ) {
+    // check to see if:
+    // 1. next point is too close to another point
+    // 2. or next point is outside the canvas
+    if (
+        checkForCloseNeighbor(nextPoint, true) ||
+        checkIfPointIsOutsideGrid(nextPoint)
+    ) {
+        // if either of these conditions are met, stop drawing
         ctx.lineWidth = 2;
-        ctx.strokeStyle = "rgba(0, 0, 0, 0.1)";
+        ctx.strokeStyle = "rgba(0, 0, 0, 0.5)";
         ctx.stroke();
     } else {
+        // otherwise, add the point to the grid and continue drawing
+        // also, if it's the first jump, add the starting point to the grid list
+        // NB: I tried to do this at the beginning of the loop, but for some reason
+        // the ctx.isPointInPath() function was returning false for the first point
+        // before we did a lineTo(). I don't know why.
+        if (isFirst) {
+            GRID[getGridIndexFromPoint(thisPoint)].push(thisPoint);
+        }
+        GRID[getGridIndexFromPoint(nextPoint)].push(nextPoint);
+        ctx.lineTo(nextPoint[0], nextPoint[1]);
         drawFlowLine(nextPoint, false);
     }
 };
 
-
-for (let i = 0; i < GRID.length; i++) {
-    drawFlowLine(GRID[i]);
-}
+drawFlowLines();
