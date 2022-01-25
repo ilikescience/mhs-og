@@ -1,6 +1,5 @@
 [build]
   functions = "functions"
-  base = "."
   publish = "deploy"
 [[redirects]]
   from = "/og"
