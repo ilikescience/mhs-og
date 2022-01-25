@@ -46,7 +46,8 @@ exports.handler = builder(async function (event, context) {
     let htmlPage = fs
         .readFileSync(`${__dirname}/template.html`)
         .toString()
-        .replace("{CSS}", getCSS());
+        .replace("{CSS}", getCSS())
+        .replace("{SEED}", params[0]);
 
     for (const k in params) {
         htmlPage = htmlPage.replace(`{${k}}`, params[k]);

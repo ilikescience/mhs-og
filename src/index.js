@@ -1,8 +1,10 @@
 import SimplexNoise from "simplex-noise";
 
+const headline = document.querySelector('.headline').innerHTML;
+
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
-const simplex = new SimplexNoise("{headline}");
+const simplex = new SimplexNoise(headline);
 
 // hyperparameters
 const WIDTH = 1200;
