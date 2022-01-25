@@ -1,2 +1,9 @@
 [build]
   functions = "functions"
+  base = "."
+  publish = "deploy"
+[[redirects]]
+  from = "/og"
+  to = "/.netlify/functions/og"
+  status = 200
+  force = true
