@@ -2,7 +2,7 @@
   functions = "functions"
   publish = "deploy"
 [[redirects]]
-  from = "/og"
-  to = "/.netlify/functions/og"
+  from = "/og/*"
+  to = "/.netlify/builders/og"
   status = 200
   force = true
