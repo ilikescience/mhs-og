@@ -13,12 +13,6 @@ const sans = fs
 
 const getCSS = () => `
   @font-face {
-    font-family: 'Charter';
-    font-style:  normal;
-    font-weight: normal;
-    src: url(data:font/woff2;charset=utf-8;base64,${serif}) format('woff2');
-  }
-  @font-face {
     font-family: 'Inter';
     font-style:  normal;
     font-weight: bold;

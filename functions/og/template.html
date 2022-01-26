@@ -32,31 +32,32 @@
             }
 
             .headline {
-                color: #fff;
-                font-size: 80px;
-                font-family: "Inter", serif;
-                position: absolute;
-                top: 80px;
-                left: 80px;
-                background: #27272E;
-                padding: 10px 20px;
-            }
-
-            .subhead,
-            .nametag {
                 position: absolute;
                 bottom: 80px;
                 left: 80px;
-                font-size: 25px;
+                right: 80px;
+            }
+
+            .headline--text{
+                display: inline;
+                color: #fff;
+                font-size: 90px;
+                font-family: "Inter", serif;
+                background: #27272E;
+                padding: 0 20px 10px;
+                letter-spacing: -2px;
+                box-decoration-break: clone;
+                -webkit-box-decoration-break: clone;
+                line-height: 1.2;
+            }
+            .nametag {
+                display: inline-block;
+                margin-bottom: 20px;
+                font-size: 30px;
                 font-family: "Inter", sans-serif;
                 background: #27272E;
                 color: #fff;
                 padding: 10px 20px;
-            }
-
-            .nametag {
-                left: auto;
-                right: 80px;
             }
 
             .nametag svg {
@@ -64,25 +65,568 @@
                 vertical-align: -5px;
                 margin-right: 10px;
             }
-
         </style>
     </head>
     <body>
         <canvas width="1200" height="675"></canvas>
         <div class="textContainer">
-            <div class="text">
-                <div class="headline">{headline}</div>
-                <div class="subhead">{subhead}</div>
+            <div class="headline">
                 <div class="nametag">
-                        <svg width="30px" height="30px" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="25" cy="25" r="25" fill="#ECD181"></circle>
-                        </svg>
-                        <span>Matthew Ström</span>
+                    <svg
+                        width="30px"
+                        height="30px"
+                        viewBox="0 0 50 50"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <circle cx="25" cy="25" r="25" fill="#ECD181"></circle>
+                    </svg>
+                    <span>Matthew Ström</span>
+                </div>
+                <div class="div">
+                    <span class="headline--text"> {headline} </span>
                 </div>
             </div>
         </div>
         <script>
-        (()=>{"use strict";const t=.5*(Math.sqrt(3)-1),e=(3-Math.sqrt(3))/6,o=1/6,n=(Math.sqrt(5)-1)/4,r=(5-Math.sqrt(5))/20,s=new Float32Array([1,1,0,-1,1,0,1,-1,0,-1,-1,0,1,0,1,-1,0,1,1,0,-1,-1,0,-1,0,1,1,0,-1,1,0,1,-1,0,-1,-1]),l=new Float32Array([0,1,1,1,0,1,1,-1,0,1,-1,1,0,1,-1,-1,0,-1,1,1,0,-1,1,-1,0,-1,-1,1,0,-1,-1,-1,1,0,1,1,1,0,1,-1,1,0,-1,1,1,0,-1,-1,-1,0,1,1,-1,0,1,-1,-1,0,-1,1,-1,0,-1,-1,1,1,0,1,1,1,0,-1,1,-1,0,1,1,-1,0,-1,-1,1,0,1,-1,1,0,-1,-1,-1,0,1,-1,-1,0,-1,1,1,1,0,1,1,-1,0,1,-1,1,0,1,-1,-1,0,-1,1,1,0,-1,1,-1,0,-1,-1,1,0,-1,-1,-1,0]),c=document.querySelector(".headline").innerHTML,i=document.querySelector("canvas"),h=i.getContext("2d"),a=new class{constructor(t=Math.random){const e="function"==typeof t?t:function(t){let e=0,o=0,n=0,r=1;const s=function(){let t=4022871197;return function(e){e=e.toString();for(let o=0;o<e.length;o++){t+=e.charCodeAt(o);let n=.02519603282416938*t;t=n>>>0,n-=t,n*=t,t=n>>>0,n-=t,t+=4294967296*n}return 2.3283064365386963e-10*(t>>>0)}}();return e=s(" "),o=s(" "),n=s(" "),e-=s(t),e<0&&(e+=1),o-=s(t),o<0&&(o+=1),n-=s(t),n<0&&(n+=1),function(){const t=2091639*e+2.3283064365386963e-10*r;return e=o,o=n,n=t-(r=0|t)}}(t);this.p=function(t){const e=new Uint8Array(256);for(let t=0;t<256;t++)e[t]=t;for(let o=0;o<255;o++){const n=o+~~(t()*(256-o)),r=e[o];e[o]=e[n],e[n]=r}return e}(e),this.perm=new Uint8Array(512),this.permMod12=new Uint8Array(512);for(let t=0;t<512;t++)this.perm[t]=this.p[255&t],this.permMod12[t]=this.perm[t]%12}noise2D(o,n){const r=this.permMod12,l=this.perm;let c=0,i=0,h=0;const a=(o+n)*t,f=Math.floor(o+a),M=Math.floor(n+a),u=(f+M)*e,p=o-(f-u),d=n-(M-u);let m,y;p>d?(m=1,y=0):(m=0,y=1);const w=p-m+e,b=d-y+e,g=p-1+2*e,q=d-1+2*e,D=255&f,A=255&M;let P=.5-p*p-d*d;if(P>=0){const t=3*r[D+l[A]];P*=P,c=P*P*(s[t]*p+s[t+1]*d)}let I=.5-w*w-b*b;if(I>=0){const t=3*r[D+m+l[A+y]];I*=I,i=I*I*(s[t]*w+s[t+1]*b)}let v=.5-g*g-q*q;if(v>=0){const t=3*r[D+1+l[A+1]];v*=v,h=v*v*(s[t]*g+s[t+1]*q)}return 70*(c+i+h)}noise3D(t,e,n){const r=this.permMod12,l=this.perm;let c,i,h,a;const f=.3333333333333333*(t+e+n),M=Math.floor(t+f),u=Math.floor(e+f),p=Math.floor(n+f),d=(M+u+p)*o,m=t-(M-d),y=e-(u-d),w=n-(p-d);let b,g,q,D,A,P;m>=y?y>=w?(b=1,g=0,q=0,D=1,A=1,P=0):m>=w?(b=1,g=0,q=0,D=1,A=0,P=1):(b=0,g=0,q=1,D=1,A=0,P=1):y<w?(b=0,g=0,q=1,D=0,A=1,P=1):m<w?(b=0,g=1,q=0,D=0,A=1,P=1):(b=0,g=1,q=0,D=1,A=1,P=0);const I=m-b+o,v=y-g+o,S=w-q+o,T=m-D+2*o,k=y-A+2*o,x=w-P+2*o,C=m-1+.5,F=y-1+.5,U=w-1+.5,O=255&M,E=255&u,H=255&p;let L=.6-m*m-y*y-w*w;if(L<0)c=0;else{const t=3*r[O+l[E+l[H]]];L*=L,c=L*L*(s[t]*m+s[t+1]*y+s[t+2]*w)}let W=.6-I*I-v*v-S*S;if(W<0)i=0;else{const t=3*r[O+b+l[E+g+l[H+q]]];W*=W,i=W*W*(s[t]*I+s[t+1]*v+s[t+2]*S)}let j=.6-T*T-k*k-x*x;if(j<0)h=0;else{const t=3*r[O+D+l[E+A+l[H+P]]];j*=j,h=j*j*(s[t]*T+s[t+1]*k+s[t+2]*x)}let z=.6-C*C-F*F-U*U;if(z<0)a=0;else{const t=3*r[O+1+l[E+1+l[H+1]]];z*=z,a=z*z*(s[t]*C+s[t+1]*F+s[t+2]*U)}return 32*(c+i+h+a)}noise4D(t,e,o,s){const c=this.perm;let i,h,a,f,M;const u=(t+e+o+s)*n,p=Math.floor(t+u),d=Math.floor(e+u),m=Math.floor(o+u),y=Math.floor(s+u),w=(p+d+m+y)*r,b=t-(p-w),g=e-(d-w),q=o-(m-w),D=s-(y-w);let A=0,P=0,I=0,v=0;b>g?A++:P++,b>q?A++:I++,b>D?A++:v++,g>q?P++:I++,g>D?P++:v++,q>D?I++:v++;const S=A>=3?1:0,T=P>=3?1:0,k=I>=3?1:0,x=v>=3?1:0,C=A>=2?1:0,F=P>=2?1:0,U=I>=2?1:0,O=v>=2?1:0,E=A>=1?1:0,H=P>=1?1:0,L=I>=1?1:0,W=v>=1?1:0,j=b-S+r,z=g-T+r,B=q-k+r,G=D-x+r,J=b-C+2*r,K=g-F+2*r,N=q-U+2*r,Q=D-O+2*r,R=b-E+3*r,V=g-H+3*r,X=q-L+3*r,Y=D-W+3*r,Z=b-1+4*r,$=g-1+4*r,_=q-1+4*r,tt=D-1+4*r,et=255&p,ot=255&d,nt=255&m,rt=255&y;let st=.6-b*b-g*g-q*q-D*D;if(st<0)i=0;else{const t=c[et+c[ot+c[nt+c[rt]]]]%32*4;st*=st,i=st*st*(l[t]*b+l[t+1]*g+l[t+2]*q+l[t+3]*D)}let lt=.6-j*j-z*z-B*B-G*G;if(lt<0)h=0;else{const t=c[et+S+c[ot+T+c[nt+k+c[rt+x]]]]%32*4;lt*=lt,h=lt*lt*(l[t]*j+l[t+1]*z+l[t+2]*B+l[t+3]*G)}let ct=.6-J*J-K*K-N*N-Q*Q;if(ct<0)a=0;else{const t=c[et+C+c[ot+F+c[nt+U+c[rt+O]]]]%32*4;ct*=ct,a=ct*ct*(l[t]*J+l[t+1]*K+l[t+2]*N+l[t+3]*Q)}let it=.6-R*R-V*V-X*X-Y*Y;if(it<0)f=0;else{const t=c[et+E+c[ot+H+c[nt+L+c[rt+W]]]]%32*4;it*=it,f=it*it*(l[t]*R+l[t+1]*V+l[t+2]*X+l[t+3]*Y)}let ht=.6-Z*Z-$*$-_*_-tt*tt;if(ht<0)M=0;else{const t=c[et+1+c[ot+1+c[nt+1+c[rt+1]]]]%32*4;ht*=ht,M=ht*ht*(l[t]*Z+l[t+1]*$+l[t+2]*_+l[t+3]*tt)}return 27*(i+h+a+f+M)}}(c),f=1200,M=.5,u=["#4b3d3a","#2d4771","#3b6db6","#4688e7","#4095df","#319bbc","#19a290","#84b88d","#c6cf96","#f7e49e","#fac78f","#f79c7a","#f46161","#DFD7C7"],p=4/Math.sqrt(2),d=Math.ceil(f/p),m=Math.ceil(675/p),y=[...new Array(d*m)].map((()=>[]));let w=1;const b=[],g=()=>(a.noise2D(0,w++)+1)/2,q=([t,e],[o,n])=>Math.sqrt(Math.pow(t-o,2)+Math.pow(e-n,2)),D=([t,e],o=!0)=>{const n=a.noise2D(t/f*M,e/675*M)*Math.PI,r=(a.noise3D(t/f*M,e/675*M,n/(2*Math.PI))+1)*p;return o?A(n,r):[n,r]},A=(t,e)=>[Math.cos(t)*e,Math.sin(t)*e],P=([t,e])=>t+e*d,I=([t,e])=>[Math.floor(t/p),Math.floor(e/p)],v=t=>{const[e,o]=I(t);return P([e,o])},S=(t,e=!1)=>{const o=(t=>{const[e,o]=I(t),n=[];for(let t=-1;t<=1;t++)for(let r=-1;r<=1;r++)if(e+t>=0&&e+t<=d&&o+r>=0&&o+r<=m){const s=y[P([e+t,o+r])];s&&n.push(s)}return n.flat()})(t);for(const n of o)if((!e||!h.isPointInPath(n[0],n[1]))&&q(n,t)<4)return!0;return!1},T=t=>{const[e,o]=t;return e<20||e>1180||o<20||o>655},k=(t,e=t,o=1,n=!0,r=0)=>{n&&(h.beginPath(),h.moveTo(t[0],t[1]));const s=D(e);let l=[e[0]+s[0]*o,e[1]+s[1]*o];S(l,!0)||T(l)?o>0?(h.moveTo(...t),l=t,k(t,l,-1,!1)):(h.lineWidth=2,h.strokeStyle=u[Math.round(D(t,!1)[1]/(2*p)*u.length)],h.stroke(),b.splice(b.indexOf(t),1)):(n&&y[v(e)].push(e),r%5==0&&(t=>{const[e,o]=t,n=D(t,!1)[0],r=[A(n-Math.PI/2,4),A(n+Math.PI/2,4)],s=[[e+r[0][0],o+r[0][1]],[e+r[1][0],o+r[1][1]]];for(const t of s)S(t,!1)||T(t)||b.push(t)})(e),r++,y[v(l)].push(l),h.lineTo(l[0],l[1]),k(t,l,o,!1,r))};i.style.background="#27272E",(t=>{for(t||(t=((t=1200,e=675)=>[g()*t,g()*e])()),b.push(t);b.length>0;){const t=(e=b)[Math.floor(g()*e.length)];S(t)?b.splice(b.indexOf(t),1):k(t)}var e})()})();
+            (() => {
+                "use strict";
+                const t = 0.5 * (Math.sqrt(3) - 1),
+                    e = (3 - Math.sqrt(3)) / 6,
+                    o = 1 / 6,
+                    n = (Math.sqrt(5) - 1) / 4,
+                    r = (5 - Math.sqrt(5)) / 20,
+                    s = new Float32Array([
+                        1, 1, 0, -1, 1, 0, 1, -1, 0, -1, -1, 0, 1, 0, 1, -1, 0,
+                        1, 1, 0, -1, -1, 0, -1, 0, 1, 1, 0, -1, 1, 0, 1, -1, 0,
+                        -1, -1,
+                    ]),
+                    l = new Float32Array([
+                        0, 1, 1, 1, 0, 1, 1, -1, 0, 1, -1, 1, 0, 1, -1, -1, 0,
+                        -1, 1, 1, 0, -1, 1, -1, 0, -1, -1, 1, 0, -1, -1, -1, 1,
+                        0, 1, 1, 1, 0, 1, -1, 1, 0, -1, 1, 1, 0, -1, -1, -1, 0,
+                        1, 1, -1, 0, 1, -1, -1, 0, -1, 1, -1, 0, -1, -1, 1, 1,
+                        0, 1, 1, 1, 0, -1, 1, -1, 0, 1, 1, -1, 0, -1, -1, 1, 0,
+                        1, -1, 1, 0, -1, -1, -1, 0, 1, -1, -1, 0, -1, 1, 1, 1,
+                        0, 1, 1, -1, 0, 1, -1, 1, 0, 1, -1, -1, 0, -1, 1, 1, 0,
+                        -1, 1, -1, 0, -1, -1, 1, 0, -1, -1, -1, 0,
+                    ]),
+                    c = document.querySelector(".headline").innerHTML,
+                    i = document.querySelector("canvas"),
+                    h = i.getContext("2d"),
+                    a = new (class {
+                        constructor(t = Math.random) {
+                            const e =
+                                "function" == typeof t
+                                    ? t
+                                    : (function (t) {
+                                          let e = 0,
+                                              o = 0,
+                                              n = 0,
+                                              r = 1;
+                                          const s = (function () {
+                                              let t = 4022871197;
+                                              return function (e) {
+                                                  e = e.toString();
+                                                  for (
+                                                      let o = 0;
+                                                      o < e.length;
+                                                      o++
+                                                  ) {
+                                                      t += e.charCodeAt(o);
+                                                      let n =
+                                                          0.02519603282416938 *
+                                                          t;
+                                                      (t = n >>> 0),
+                                                          (n -= t),
+                                                          (n *= t),
+                                                          (t = n >>> 0),
+                                                          (n -= t),
+                                                          (t += 4294967296 * n);
+                                                  }
+                                                  return (
+                                                      2.3283064365386963e-10 *
+                                                      (t >>> 0)
+                                                  );
+                                              };
+                                          })();
+                                          return (
+                                              (e = s(" ")),
+                                              (o = s(" ")),
+                                              (n = s(" ")),
+                                              (e -= s(t)),
+                                              e < 0 && (e += 1),
+                                              (o -= s(t)),
+                                              o < 0 && (o += 1),
+                                              (n -= s(t)),
+                                              n < 0 && (n += 1),
+                                              function () {
+                                                  const t =
+                                                      2091639 * e +
+                                                      2.3283064365386963e-10 *
+                                                          r;
+                                                  return (
+                                                      (e = o),
+                                                      (o = n),
+                                                      (n = t - (r = 0 | t))
+                                                  );
+                                              }
+                                          );
+                                      })(t);
+                            (this.p = (function (t) {
+                                const e = new Uint8Array(256);
+                                for (let t = 0; t < 256; t++) e[t] = t;
+                                for (let o = 0; o < 255; o++) {
+                                    const n = o + ~~(t() * (256 - o)),
+                                        r = e[o];
+                                    (e[o] = e[n]), (e[n] = r);
+                                }
+                                return e;
+                            })(e)),
+                                (this.perm = new Uint8Array(512)),
+                                (this.permMod12 = new Uint8Array(512));
+                            for (let t = 0; t < 512; t++)
+                                (this.perm[t] = this.p[255 & t]),
+                                    (this.permMod12[t] = this.perm[t] % 12);
+                        }
+                        noise2D(o, n) {
+                            const r = this.permMod12,
+                                l = this.perm;
+                            let c = 0,
+                                i = 0,
+                                h = 0;
+                            const a = (o + n) * t,
+                                f = Math.floor(o + a),
+                                M = Math.floor(n + a),
+                                u = (f + M) * e,
+                                p = o - (f - u),
+                                d = n - (M - u);
+                            let m, y;
+                            p > d ? ((m = 1), (y = 0)) : ((m = 0), (y = 1));
+                            const w = p - m + e,
+                                b = d - y + e,
+                                g = p - 1 + 2 * e,
+                                q = d - 1 + 2 * e,
+                                D = 255 & f,
+                                A = 255 & M;
+                            let P = 0.5 - p * p - d * d;
+                            if (P >= 0) {
+                                const t = 3 * r[D + l[A]];
+                                (P *= P),
+                                    (c = P * P * (s[t] * p + s[t + 1] * d));
+                            }
+                            let I = 0.5 - w * w - b * b;
+                            if (I >= 0) {
+                                const t = 3 * r[D + m + l[A + y]];
+                                (I *= I),
+                                    (i = I * I * (s[t] * w + s[t + 1] * b));
+                            }
+                            let v = 0.5 - g * g - q * q;
+                            if (v >= 0) {
+                                const t = 3 * r[D + 1 + l[A + 1]];
+                                (v *= v),
+                                    (h = v * v * (s[t] * g + s[t + 1] * q));
+                            }
+                            return 70 * (c + i + h);
+                        }
+                        noise3D(t, e, n) {
+                            const r = this.permMod12,
+                                l = this.perm;
+                            let c, i, h, a;
+                            const f = 0.3333333333333333 * (t + e + n),
+                                M = Math.floor(t + f),
+                                u = Math.floor(e + f),
+                                p = Math.floor(n + f),
+                                d = (M + u + p) * o,
+                                m = t - (M - d),
+                                y = e - (u - d),
+                                w = n - (p - d);
+                            let b, g, q, D, A, P;
+                            m >= y
+                                ? y >= w
+                                    ? ((b = 1),
+                                      (g = 0),
+                                      (q = 0),
+                                      (D = 1),
+                                      (A = 1),
+                                      (P = 0))
+                                    : m >= w
+                                    ? ((b = 1),
+                                      (g = 0),
+                                      (q = 0),
+                                      (D = 1),
+                                      (A = 0),
+                                      (P = 1))
+                                    : ((b = 0),
+                                      (g = 0),
+                                      (q = 1),
+                                      (D = 1),
+                                      (A = 0),
+                                      (P = 1))
+                                : y < w
+                                ? ((b = 0),
+                                  (g = 0),
+                                  (q = 1),
+                                  (D = 0),
+                                  (A = 1),
+                                  (P = 1))
+                                : m < w
+                                ? ((b = 0),
+                                  (g = 1),
+                                  (q = 0),
+                                  (D = 0),
+                                  (A = 1),
+                                  (P = 1))
+                                : ((b = 0),
+                                  (g = 1),
+                                  (q = 0),
+                                  (D = 1),
+                                  (A = 1),
+                                  (P = 0));
+                            const I = m - b + o,
+                                v = y - g + o,
+                                S = w - q + o,
+                                T = m - D + 2 * o,
+                                k = y - A + 2 * o,
+                                x = w - P + 2 * o,
+                                C = m - 1 + 0.5,
+                                F = y - 1 + 0.5,
+                                U = w - 1 + 0.5,
+                                O = 255 & M,
+                                E = 255 & u,
+                                H = 255 & p;
+                            let L = 0.6 - m * m - y * y - w * w;
+                            if (L < 0) c = 0;
+                            else {
+                                const t = 3 * r[O + l[E + l[H]]];
+                                (L *= L),
+                                    (c =
+                                        L *
+                                        L *
+                                        (s[t] * m +
+                                            s[t + 1] * y +
+                                            s[t + 2] * w));
+                            }
+                            let W = 0.6 - I * I - v * v - S * S;
+                            if (W < 0) i = 0;
+                            else {
+                                const t = 3 * r[O + b + l[E + g + l[H + q]]];
+                                (W *= W),
+                                    (i =
+                                        W *
+                                        W *
+                                        (s[t] * I +
+                                            s[t + 1] * v +
+                                            s[t + 2] * S));
+                            }
+                            let j = 0.6 - T * T - k * k - x * x;
+                            if (j < 0) h = 0;
+                            else {
+                                const t = 3 * r[O + D + l[E + A + l[H + P]]];
+                                (j *= j),
+                                    (h =
+                                        j *
+                                        j *
+                                        (s[t] * T +
+                                            s[t + 1] * k +
+                                            s[t + 2] * x));
+                            }
+                            let z = 0.6 - C * C - F * F - U * U;
+                            if (z < 0) a = 0;
+                            else {
+                                const t = 3 * r[O + 1 + l[E + 1 + l[H + 1]]];
+                                (z *= z),
+                                    (a =
+                                        z *
+                                        z *
+                                        (s[t] * C +
+                                            s[t + 1] * F +
+                                            s[t + 2] * U));
+                            }
+                            return 32 * (c + i + h + a);
+                        }
+                        noise4D(t, e, o, s) {
+                            const c = this.perm;
+                            let i, h, a, f, M;
+                            const u = (t + e + o + s) * n,
+                                p = Math.floor(t + u),
+                                d = Math.floor(e + u),
+                                m = Math.floor(o + u),
+                                y = Math.floor(s + u),
+                                w = (p + d + m + y) * r,
+                                b = t - (p - w),
+                                g = e - (d - w),
+                                q = o - (m - w),
+                                D = s - (y - w);
+                            let A = 0,
+                                P = 0,
+                                I = 0,
+                                v = 0;
+                            b > g ? A++ : P++,
+                                b > q ? A++ : I++,
+                                b > D ? A++ : v++,
+                                g > q ? P++ : I++,
+                                g > D ? P++ : v++,
+                                q > D ? I++ : v++;
+                            const S = A >= 3 ? 1 : 0,
+                                T = P >= 3 ? 1 : 0,
+                                k = I >= 3 ? 1 : 0,
+                                x = v >= 3 ? 1 : 0,
+                                C = A >= 2 ? 1 : 0,
+                                F = P >= 2 ? 1 : 0,
+                                U = I >= 2 ? 1 : 0,
+                                O = v >= 2 ? 1 : 0,
+                                E = A >= 1 ? 1 : 0,
+                                H = P >= 1 ? 1 : 0,
+                                L = I >= 1 ? 1 : 0,
+                                W = v >= 1 ? 1 : 0,
+                                j = b - S + r,
+                                z = g - T + r,
+                                B = q - k + r,
+                                G = D - x + r,
+                                J = b - C + 2 * r,
+                                K = g - F + 2 * r,
+                                N = q - U + 2 * r,
+                                Q = D - O + 2 * r,
+                                R = b - E + 3 * r,
+                                V = g - H + 3 * r,
+                                X = q - L + 3 * r,
+                                Y = D - W + 3 * r,
+                                Z = b - 1 + 4 * r,
+                                $ = g - 1 + 4 * r,
+                                _ = q - 1 + 4 * r,
+                                tt = D - 1 + 4 * r,
+                                et = 255 & p,
+                                ot = 255 & d,
+                                nt = 255 & m,
+                                rt = 255 & y;
+                            let st = 0.6 - b * b - g * g - q * q - D * D;
+                            if (st < 0) i = 0;
+                            else {
+                                const t =
+                                    (c[et + c[ot + c[nt + c[rt]]]] % 32) * 4;
+                                (st *= st),
+                                    (i =
+                                        st *
+                                        st *
+                                        (l[t] * b +
+                                            l[t + 1] * g +
+                                            l[t + 2] * q +
+                                            l[t + 3] * D));
+                            }
+                            let lt = 0.6 - j * j - z * z - B * B - G * G;
+                            if (lt < 0) h = 0;
+                            else {
+                                const t =
+                                    (c[
+                                        et +
+                                            S +
+                                            c[ot + T + c[nt + k + c[rt + x]]]
+                                    ] %
+                                        32) *
+                                    4;
+                                (lt *= lt),
+                                    (h =
+                                        lt *
+                                        lt *
+                                        (l[t] * j +
+                                            l[t + 1] * z +
+                                            l[t + 2] * B +
+                                            l[t + 3] * G));
+                            }
+                            let ct = 0.6 - J * J - K * K - N * N - Q * Q;
+                            if (ct < 0) a = 0;
+                            else {
+                                const t =
+                                    (c[
+                                        et +
+                                            C +
+                                            c[ot + F + c[nt + U + c[rt + O]]]
+                                    ] %
+                                        32) *
+                                    4;
+                                (ct *= ct),
+                                    (a =
+                                        ct *
+                                        ct *
+                                        (l[t] * J +
+                                            l[t + 1] * K +
+                                            l[t + 2] * N +
+                                            l[t + 3] * Q));
+                            }
+                            let it = 0.6 - R * R - V * V - X * X - Y * Y;
+                            if (it < 0) f = 0;
+                            else {
+                                const t =
+                                    (c[
+                                        et +
+                                            E +
+                                            c[ot + H + c[nt + L + c[rt + W]]]
+                                    ] %
+                                        32) *
+                                    4;
+                                (it *= it),
+                                    (f =
+                                        it *
+                                        it *
+                                        (l[t] * R +
+                                            l[t + 1] * V +
+                                            l[t + 2] * X +
+                                            l[t + 3] * Y));
+                            }
+                            let ht = 0.6 - Z * Z - $ * $ - _ * _ - tt * tt;
+                            if (ht < 0) M = 0;
+                            else {
+                                const t =
+                                    (c[
+                                        et +
+                                            1 +
+                                            c[ot + 1 + c[nt + 1 + c[rt + 1]]]
+                                    ] %
+                                        32) *
+                                    4;
+                                (ht *= ht),
+                                    (M =
+                                        ht *
+                                        ht *
+                                        (l[t] * Z +
+                                            l[t + 1] * $ +
+                                            l[t + 2] * _ +
+                                            l[t + 3] * tt));
+                            }
+                            return 27 * (i + h + a + f + M);
+                        }
+                    })(c),
+                    f = 1200,
+                    M = 0.5,
+                    u = [
+                        "#4b3d3a",
+                        "#2d4771",
+                        "#3b6db6",
+                        "#4688e7",
+                        "#4095df",
+                        "#319bbc",
+                        "#19a290",
+                        "#84b88d",
+                        "#c6cf96",
+                        "#f7e49e",
+                        "#fac78f",
+                        "#f79c7a",
+                        "#f46161",
+                        "#DFD7C7",
+                    ],
+                    p = 4 / Math.sqrt(2),
+                    d = Math.ceil(f / p),
+                    m = Math.ceil(675 / p),
+                    y = [...new Array(d * m)].map(() => []);
+                let w = 1;
+                const b = [],
+                    g = () => (a.noise2D(0, w++) + 1) / 2,
+                    q = ([t, e], [o, n]) =>
+                        Math.sqrt(Math.pow(t - o, 2) + Math.pow(e - n, 2)),
+                    D = ([t, e], o = !0) => {
+                        const n =
+                                a.noise2D((t / f) * M, (e / 675) * M) * Math.PI,
+                            r =
+                                (a.noise3D(
+                                    (t / f) * M,
+                                    (e / 675) * M,
+                                    n / (2 * Math.PI)
+                                ) +
+                                    1) *
+                                p;
+                        return o ? A(n, r) : [n, r];
+                    },
+                    A = (t, e) => [Math.cos(t) * e, Math.sin(t) * e],
+                    P = ([t, e]) => t + e * d,
+                    I = ([t, e]) => [Math.floor(t / p), Math.floor(e / p)],
+                    v = (t) => {
+                        const [e, o] = I(t);
+                        return P([e, o]);
+                    },
+                    S = (t, e = !1) => {
+                        const o = ((t) => {
+                            const [e, o] = I(t),
+                                n = [];
+                            for (let t = -1; t <= 1; t++)
+                                for (let r = -1; r <= 1; r++)
+                                    if (
+                                        e + t >= 0 &&
+                                        e + t <= d &&
+                                        o + r >= 0 &&
+                                        o + r <= m
+                                    ) {
+                                        const s = y[P([e + t, o + r])];
+                                        s && n.push(s);
+                                    }
+                            return n.flat();
+                        })(t);
+                        for (const n of o)
+                            if (
+                                (!e || !h.isPointInPath(n[0], n[1])) &&
+                                q(n, t) < 4
+                            )
+                                return !0;
+                        return !1;
+                    },
+                    T = (t) => {
+                        const [e, o] = t;
+                        return e < 20 || e > 1180 || o < 20 || o > 655;
+                    },
+                    k = (t, e = t, o = 1, n = !0, r = 0) => {
+                        n && (h.beginPath(), h.moveTo(t[0], t[1]));
+                        const s = D(e);
+                        let l = [e[0] + s[0] * o, e[1] + s[1] * o];
+                        S(l, !0) || T(l)
+                            ? o > 0
+                                ? (h.moveTo(...t), (l = t), k(t, l, -1, !1))
+                                : ((h.lineWidth = 2),
+                                  (h.strokeStyle =
+                                      u[
+                                          Math.round(
+                                              (D(t, !1)[1] / (2 * p)) * u.length
+                                          )
+                                      ]),
+                                  h.stroke(),
+                                  b.splice(b.indexOf(t), 1))
+                            : (n && y[v(e)].push(e),
+                              r % 5 == 0 &&
+                                  ((t) => {
+                                      const [e, o] = t,
+                                          n = D(t, !1)[0],
+                                          r = [
+                                              A(n - Math.PI / 2, 4),
+                                              A(n + Math.PI / 2, 4),
+                                          ],
+                                          s = [
+                                              [e + r[0][0], o + r[0][1]],
+                                              [e + r[1][0], o + r[1][1]],
+                                          ];
+                                      for (const t of s)
+                                          S(t, !1) || T(t) || b.push(t);
+                                  })(e),
+                              r++,
+                              y[v(l)].push(l),
+                              h.lineTo(l[0], l[1]),
+                              k(t, l, o, !1, r));
+                    };
+                (i.style.background = "#27272E"),
+                    ((t) => {
+                        for (
+                            t ||
+                                (t = ((t = 1200, e = 675) => [
+                                    g() * t,
+                                    g() * e,
+                                ])()),
+                                b.push(t);
+                            b.length > 0;
+
+                        ) {
+                            const t = (e = b)[Math.floor(g() * e.length)];
+                            S(t) ? b.splice(b.indexOf(t), 1) : k(t);
+                        }
+                        var e;
+                    })();
+            })();
         </script>
     </body>
 </html>
