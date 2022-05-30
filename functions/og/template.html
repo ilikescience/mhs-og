@@ -25,7 +25,7 @@
 
             .textContainer {
                 width: 1200px;
-                height: 675px;
+                height: 630px;
                 position: absolute;
                 top: 0;
                 left: 0;
@@ -36,6 +36,10 @@
                 bottom: 80px;
                 left: 80px;
                 right: 80px;
+            }
+
+            .section {
+                margin-bottom:20px;
             }
 
             .headline--text{
@@ -50,9 +54,19 @@
                 -webkit-box-decoration-break: clone;
                 line-height: 1.2;
             }
+            .subhead--text{
+                display: inline;
+                color: #f9f7f6;
+                font-size: 40px;
+                font-family: "Inter", serif;
+                background: #27272E;
+                padding: 0 20px 10px;
+                box-decoration-break: clone;
+                -webkit-box-decoration-break: clone;
+                line-height: 1.3;
+            }
             .nametag {
-                display: inline-block;
-                margin-bottom: 20px;
+                display: inline;
                 font-size: 30px;
                 font-family: "Inter", sans-serif;
                 background: #27272E;
@@ -68,22 +82,32 @@
         </style>
     </head>
     <body>
-        <canvas width="1200" height="675"></canvas>
+        <canvas width="1200" height="630"></canvas>
         <div class="textContainer">
             <div class="headline">
-                <div class="nametag">
-                    <svg
-                        width="30px"
-                        height="30px"
-                        viewBox="0 0 50 50"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <circle cx="25" cy="25" r="25" fill="#ECD181"></circle>
-                    </svg>
-                    <span>Matthew Ström</span>
+                <div class="section">
+                    <div class="nametag">
+                        <svg
+                            width="30px"
+                            height="30px"
+                            viewBox="0 0 50 50"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <circle
+                                cx="25"
+                                cy="25"
+                                r="25"
+                                fill="#ECD181"
+                            ></circle>
+                        </svg>
+                        <span>Matthew Ström</span>
+                    </div>
                 </div>
-                <div class="div">
-                    <span class="headline--text"> {headline} </span>
+                <div class="section">
+                    <div class="headline--text">{headline}</div>
+                </div>
+                <div class="section">
+                    <div class="subhead--text">{subhead}</div>
                 </div>
             </div>
         </div>
@@ -110,10 +134,13 @@
                         0, 1, 1, -1, 0, 1, -1, 1, 0, 1, -1, -1, 0, -1, 1, 1, 0,
                         -1, 1, -1, 0, -1, -1, 1, 0, -1, -1, -1, 0,
                     ]),
-                    c = document.querySelector(".headline").innerHTML,
-                    i = document.querySelector("canvas"),
-                    h = i.getContext("2d"),
-                    a = new (class {
+                    c = document.querySelector(".headline--text").innerText,
+                    h = document.querySelector(".subhead--text").innerText;
+                (0 !== h.length && "{subhead}" !== h) ||
+                    document.querySelector(".subhead--text").remove();
+                const i = document.querySelector("canvas"),
+                    a = i.getContext("2d"),
+                    f = new (class {
                         constructor(t = Math.random) {
                             const e =
                                 "function" == typeof t
@@ -192,248 +219,248 @@
                             const r = this.permMod12,
                                 l = this.perm;
                             let c = 0,
-                                i = 0,
-                                h = 0;
+                                h = 0,
+                                i = 0;
                             const a = (o + n) * t,
                                 f = Math.floor(o + a),
-                                M = Math.floor(n + a),
-                                u = (f + M) * e,
-                                p = o - (f - u),
-                                d = n - (M - u);
+                                u = Math.floor(n + a),
+                                M = (f + u) * e,
+                                d = o - (f - M),
+                                p = n - (u - M);
                             let m, y;
-                            p > d ? ((m = 1), (y = 0)) : ((m = 0), (y = 1));
-                            const w = p - m + e,
-                                b = d - y + e,
-                                g = p - 1 + 2 * e,
-                                q = d - 1 + 2 * e,
-                                D = 255 & f,
-                                A = 255 & M;
-                            let P = 0.5 - p * p - d * d;
+                            d > p ? ((m = 1), (y = 0)) : ((m = 0), (y = 1));
+                            const b = d - m + e,
+                                q = p - y + e,
+                                g = d - 1 + 2 * e,
+                                w = p - 1 + 2 * e,
+                                x = 255 & f,
+                                D = 255 & u;
+                            let A = 0.5 - d * d - p * p;
+                            if (A >= 0) {
+                                const t = 3 * r[x + l[D]];
+                                (A *= A),
+                                    (c = A * A * (s[t] * d + s[t + 1] * p));
+                            }
+                            let P = 0.5 - b * b - q * q;
                             if (P >= 0) {
-                                const t = 3 * r[D + l[A]];
+                                const t = 3 * r[x + m + l[D + y]];
                                 (P *= P),
-                                    (c = P * P * (s[t] * p + s[t + 1] * d));
+                                    (h = P * P * (s[t] * b + s[t + 1] * q));
                             }
-                            let I = 0.5 - w * w - b * b;
-                            if (I >= 0) {
-                                const t = 3 * r[D + m + l[A + y]];
-                                (I *= I),
-                                    (i = I * I * (s[t] * w + s[t + 1] * b));
+                            let S = 0.5 - g * g - w * w;
+                            if (S >= 0) {
+                                const t = 3 * r[x + 1 + l[D + 1]];
+                                (S *= S),
+                                    (i = S * S * (s[t] * g + s[t + 1] * w));
                             }
-                            let v = 0.5 - g * g - q * q;
-                            if (v >= 0) {
-                                const t = 3 * r[D + 1 + l[A + 1]];
-                                (v *= v),
-                                    (h = v * v * (s[t] * g + s[t + 1] * q));
-                            }
-                            return 70 * (c + i + h);
+                            return 70 * (c + h + i);
                         }
                         noise3D(t, e, n) {
                             const r = this.permMod12,
                                 l = this.perm;
-                            let c, i, h, a;
+                            let c, h, i, a;
                             const f = 0.3333333333333333 * (t + e + n),
-                                M = Math.floor(t + f),
-                                u = Math.floor(e + f),
-                                p = Math.floor(n + f),
-                                d = (M + u + p) * o,
-                                m = t - (M - d),
-                                y = e - (u - d),
-                                w = n - (p - d);
-                            let b, g, q, D, A, P;
+                                u = Math.floor(t + f),
+                                M = Math.floor(e + f),
+                                d = Math.floor(n + f),
+                                p = (u + M + d) * o,
+                                m = t - (u - p),
+                                y = e - (M - p),
+                                b = n - (d - p);
+                            let q, g, w, x, D, A;
                             m >= y
-                                ? y >= w
-                                    ? ((b = 1),
+                                ? y >= b
+                                    ? ((q = 1),
                                       (g = 0),
-                                      (q = 0),
+                                      (w = 0),
+                                      (x = 1),
                                       (D = 1),
-                                      (A = 1),
-                                      (P = 0))
-                                    : m >= w
-                                    ? ((b = 1),
+                                      (A = 0))
+                                    : m >= b
+                                    ? ((q = 1),
                                       (g = 0),
-                                      (q = 0),
-                                      (D = 1),
-                                      (A = 0),
-                                      (P = 1))
-                                    : ((b = 0),
+                                      (w = 0),
+                                      (x = 1),
+                                      (D = 0),
+                                      (A = 1))
+                                    : ((q = 0),
                                       (g = 0),
-                                      (q = 1),
-                                      (D = 1),
-                                      (A = 0),
-                                      (P = 1))
-                                : y < w
-                                ? ((b = 0),
+                                      (w = 1),
+                                      (x = 1),
+                                      (D = 0),
+                                      (A = 1))
+                                : y < b
+                                ? ((q = 0),
                                   (g = 0),
-                                  (q = 1),
-                                  (D = 0),
-                                  (A = 1),
-                                  (P = 1))
-                                : m < w
-                                ? ((b = 0),
-                                  (g = 1),
-                                  (q = 0),
-                                  (D = 0),
-                                  (A = 1),
-                                  (P = 1))
-                                : ((b = 0),
-                                  (g = 1),
-                                  (q = 0),
+                                  (w = 1),
+                                  (x = 0),
                                   (D = 1),
-                                  (A = 1),
-                                  (P = 0));
-                            const I = m - b + o,
-                                v = y - g + o,
-                                S = w - q + o,
-                                T = m - D + 2 * o,
-                                k = y - A + 2 * o,
-                                x = w - P + 2 * o,
+                                  (A = 1))
+                                : m < b
+                                ? ((q = 0),
+                                  (g = 1),
+                                  (w = 0),
+                                  (x = 0),
+                                  (D = 1),
+                                  (A = 1))
+                                : ((q = 0),
+                                  (g = 1),
+                                  (w = 0),
+                                  (x = 1),
+                                  (D = 1),
+                                  (A = 0));
+                            const P = m - q + o,
+                                S = y - g + o,
+                                v = b - w + o,
+                                I = m - x + 2 * o,
+                                T = y - D + 2 * o,
+                                k = b - A + 2 * o,
                                 C = m - 1 + 0.5,
                                 F = y - 1 + 0.5,
-                                U = w - 1 + 0.5,
-                                O = 255 & M,
-                                E = 255 & u,
-                                H = 255 & p;
-                            let L = 0.6 - m * m - y * y - w * w;
-                            if (L < 0) c = 0;
+                                U = b - 1 + 0.5,
+                                O = 255 & u,
+                                E = 255 & M,
+                                W = 255 & d;
+                            let j = 0.6 - m * m - y * y - b * b;
+                            if (j < 0) c = 0;
                             else {
-                                const t = 3 * r[O + l[E + l[H]]];
-                                (L *= L),
+                                const t = 3 * r[O + l[E + l[W]]];
+                                (j *= j),
                                     (c =
-                                        L *
-                                        L *
+                                        j *
+                                        j *
                                         (s[t] * m +
                                             s[t + 1] * y +
-                                            s[t + 2] * w));
+                                            s[t + 2] * b));
                             }
-                            let W = 0.6 - I * I - v * v - S * S;
-                            if (W < 0) i = 0;
+                            let z = 0.6 - P * P - S * S - v * v;
+                            if (z < 0) h = 0;
                             else {
-                                const t = 3 * r[O + b + l[E + g + l[H + q]]];
-                                (W *= W),
-                                    (i =
-                                        W *
-                                        W *
-                                        (s[t] * I +
-                                            s[t + 1] * v +
-                                            s[t + 2] * S));
-                            }
-                            let j = 0.6 - T * T - k * k - x * x;
-                            if (j < 0) h = 0;
-                            else {
-                                const t = 3 * r[O + D + l[E + A + l[H + P]]];
-                                (j *= j),
-                                    (h =
-                                        j *
-                                        j *
-                                        (s[t] * T +
-                                            s[t + 1] * k +
-                                            s[t + 2] * x));
-                            }
-                            let z = 0.6 - C * C - F * F - U * U;
-                            if (z < 0) a = 0;
-                            else {
-                                const t = 3 * r[O + 1 + l[E + 1 + l[H + 1]]];
+                                const t = 3 * r[O + q + l[E + g + l[W + w]]];
                                 (z *= z),
+                                    (h =
+                                        z *
+                                        z *
+                                        (s[t] * P +
+                                            s[t + 1] * S +
+                                            s[t + 2] * v));
+                            }
+                            let B = 0.6 - I * I - T * T - k * k;
+                            if (B < 0) i = 0;
+                            else {
+                                const t = 3 * r[O + x + l[E + D + l[W + A]]];
+                                (B *= B),
+                                    (i =
+                                        B *
+                                        B *
+                                        (s[t] * I +
+                                            s[t + 1] * T +
+                                            s[t + 2] * k));
+                            }
+                            let G = 0.6 - C * C - F * F - U * U;
+                            if (G < 0) a = 0;
+                            else {
+                                const t = 3 * r[O + 1 + l[E + 1 + l[W + 1]]];
+                                (G *= G),
                                     (a =
-                                        z *
-                                        z *
+                                        G *
+                                        G *
                                         (s[t] * C +
                                             s[t + 1] * F +
                                             s[t + 2] * U));
                             }
-                            return 32 * (c + i + h + a);
+                            return 32 * (c + h + i + a);
                         }
                         noise4D(t, e, o, s) {
                             const c = this.perm;
-                            let i, h, a, f, M;
-                            const u = (t + e + o + s) * n,
-                                p = Math.floor(t + u),
-                                d = Math.floor(e + u),
-                                m = Math.floor(o + u),
-                                y = Math.floor(s + u),
-                                w = (p + d + m + y) * r,
-                                b = t - (p - w),
-                                g = e - (d - w),
-                                q = o - (m - w),
-                                D = s - (y - w);
-                            let A = 0,
+                            let h, i, a, f, u;
+                            const M = (t + e + o + s) * n,
+                                d = Math.floor(t + M),
+                                p = Math.floor(e + M),
+                                m = Math.floor(o + M),
+                                y = Math.floor(s + M),
+                                b = (d + p + m + y) * r,
+                                q = t - (d - b),
+                                g = e - (p - b),
+                                w = o - (m - b),
+                                x = s - (y - b);
+                            let D = 0,
+                                A = 0,
                                 P = 0,
-                                I = 0,
-                                v = 0;
-                            b > g ? A++ : P++,
-                                b > q ? A++ : I++,
-                                b > D ? A++ : v++,
-                                g > q ? P++ : I++,
-                                g > D ? P++ : v++,
-                                q > D ? I++ : v++;
-                            const S = A >= 3 ? 1 : 0,
+                                S = 0;
+                            q > g ? D++ : A++,
+                                q > w ? D++ : P++,
+                                q > x ? D++ : S++,
+                                g > w ? A++ : P++,
+                                g > x ? A++ : S++,
+                                w > x ? P++ : S++;
+                            const v = D >= 3 ? 1 : 0,
+                                I = A >= 3 ? 1 : 0,
                                 T = P >= 3 ? 1 : 0,
-                                k = I >= 3 ? 1 : 0,
-                                x = v >= 3 ? 1 : 0,
-                                C = A >= 2 ? 1 : 0,
-                                F = P >= 2 ? 1 : 0,
-                                U = I >= 2 ? 1 : 0,
-                                O = v >= 2 ? 1 : 0,
-                                E = A >= 1 ? 1 : 0,
-                                H = P >= 1 ? 1 : 0,
-                                L = I >= 1 ? 1 : 0,
-                                W = v >= 1 ? 1 : 0,
-                                j = b - S + r,
-                                z = g - T + r,
-                                B = q - k + r,
-                                G = D - x + r,
-                                J = b - C + 2 * r,
-                                K = g - F + 2 * r,
-                                N = q - U + 2 * r,
-                                Q = D - O + 2 * r,
-                                R = b - E + 3 * r,
-                                V = g - H + 3 * r,
-                                X = q - L + 3 * r,
-                                Y = D - W + 3 * r,
-                                Z = b - 1 + 4 * r,
+                                k = S >= 3 ? 1 : 0,
+                                C = D >= 2 ? 1 : 0,
+                                F = A >= 2 ? 1 : 0,
+                                U = P >= 2 ? 1 : 0,
+                                O = S >= 2 ? 1 : 0,
+                                E = D >= 1 ? 1 : 0,
+                                W = A >= 1 ? 1 : 0,
+                                j = P >= 1 ? 1 : 0,
+                                z = S >= 1 ? 1 : 0,
+                                B = q - v + r,
+                                G = g - I + r,
+                                H = w - T + r,
+                                J = x - k + r,
+                                K = q - C + 2 * r,
+                                L = g - F + 2 * r,
+                                N = w - U + 2 * r,
+                                Q = x - O + 2 * r,
+                                R = q - E + 3 * r,
+                                V = g - W + 3 * r,
+                                X = w - j + 3 * r,
+                                Y = x - z + 3 * r,
+                                Z = q - 1 + 4 * r,
                                 $ = g - 1 + 4 * r,
-                                _ = q - 1 + 4 * r,
-                                tt = D - 1 + 4 * r,
-                                et = 255 & p,
-                                ot = 255 & d,
+                                _ = w - 1 + 4 * r,
+                                tt = x - 1 + 4 * r,
+                                et = 255 & d,
+                                ot = 255 & p,
                                 nt = 255 & m,
                                 rt = 255 & y;
-                            let st = 0.6 - b * b - g * g - q * q - D * D;
-                            if (st < 0) i = 0;
+                            let st = 0.6 - q * q - g * g - w * w - x * x;
+                            if (st < 0) h = 0;
                             else {
                                 const t =
                                     (c[et + c[ot + c[nt + c[rt]]]] % 32) * 4;
                                 (st *= st),
-                                    (i =
+                                    (h =
                                         st *
                                         st *
-                                        (l[t] * b +
+                                        (l[t] * q +
                                             l[t + 1] * g +
-                                            l[t + 2] * q +
-                                            l[t + 3] * D));
+                                            l[t + 2] * w +
+                                            l[t + 3] * x));
                             }
-                            let lt = 0.6 - j * j - z * z - B * B - G * G;
-                            if (lt < 0) h = 0;
+                            let lt = 0.6 - B * B - G * G - H * H - J * J;
+                            if (lt < 0) i = 0;
                             else {
                                 const t =
                                     (c[
                                         et +
-                                            S +
-                                            c[ot + T + c[nt + k + c[rt + x]]]
+                                            v +
+                                            c[ot + I + c[nt + T + c[rt + k]]]
                                     ] %
                                         32) *
                                     4;
                                 (lt *= lt),
-                                    (h =
+                                    (i =
                                         lt *
                                         lt *
-                                        (l[t] * j +
-                                            l[t + 1] * z +
-                                            l[t + 2] * B +
-                                            l[t + 3] * G));
+                                        (l[t] * B +
+                                            l[t + 1] * G +
+                                            l[t + 2] * H +
+                                            l[t + 3] * J));
                             }
-                            let ct = 0.6 - J * J - K * K - N * N - Q * Q;
+                            let ct = 0.6 - K * K - L * L - N * N - Q * Q;
                             if (ct < 0) a = 0;
                             else {
                                 const t =
@@ -448,33 +475,33 @@
                                     (a =
                                         ct *
                                         ct *
-                                        (l[t] * J +
-                                            l[t + 1] * K +
+                                        (l[t] * K +
+                                            l[t + 1] * L +
                                             l[t + 2] * N +
                                             l[t + 3] * Q));
                             }
-                            let it = 0.6 - R * R - V * V - X * X - Y * Y;
-                            if (it < 0) f = 0;
+                            let ht = 0.6 - R * R - V * V - X * X - Y * Y;
+                            if (ht < 0) f = 0;
                             else {
                                 const t =
                                     (c[
                                         et +
                                             E +
-                                            c[ot + H + c[nt + L + c[rt + W]]]
+                                            c[ot + W + c[nt + j + c[rt + z]]]
                                     ] %
                                         32) *
                                     4;
-                                (it *= it),
+                                (ht *= ht),
                                     (f =
-                                        it *
-                                        it *
+                                        ht *
+                                        ht *
                                         (l[t] * R +
                                             l[t + 1] * V +
                                             l[t + 2] * X +
                                             l[t + 3] * Y));
                             }
-                            let ht = 0.6 - Z * Z - $ * $ - _ * _ - tt * tt;
-                            if (ht < 0) M = 0;
+                            let it = 0.6 - Z * Z - $ * $ - _ * _ - tt * tt;
+                            if (it < 0) u = 0;
                             else {
                                 const t =
                                     (c[
@@ -484,21 +511,21 @@
                                     ] %
                                         32) *
                                     4;
-                                (ht *= ht),
-                                    (M =
-                                        ht *
-                                        ht *
+                                (it *= it),
+                                    (u =
+                                        it *
+                                        it *
                                         (l[t] * Z +
                                             l[t + 1] * $ +
                                             l[t + 2] * _ +
                                             l[t + 3] * tt));
                             }
-                            return 27 * (i + h + a + f + M);
+                            return 27 * (h + i + a + f + u);
                         }
                     })(c),
-                    f = 1200,
+                    u = 1200,
                     M = 0.5,
-                    u = [
+                    d = [
                         "#4b3d3a",
                         "#2d4771",
                         "#3b6db6",
@@ -515,21 +542,21 @@
                         "#DFD7C7",
                     ],
                     p = 4 / Math.sqrt(2),
-                    d = Math.ceil(f / p),
-                    m = Math.ceil(675 / p),
-                    y = [...new Array(d * m)].map(() => []);
-                let w = 1;
-                const b = [],
-                    g = () => (a.noise2D(0, w++) + 1) / 2,
-                    q = ([t, e], [o, n]) =>
+                    m = Math.ceil(u / p),
+                    y = Math.ceil(630 / p),
+                    b = [...new Array(m * y)].map(() => []);
+                let q = 1;
+                const g = [],
+                    w = () => (f.noise2D(0, q++) + 1) / 2,
+                    x = ([t, e], [o, n]) =>
                         Math.sqrt(Math.pow(t - o, 2) + Math.pow(e - n, 2)),
                     D = ([t, e], o = !0) => {
                         const n =
-                                a.noise2D((t / f) * M, (e / 675) * M) * Math.PI,
+                                f.noise2D((t / u) * M, (e / 630) * M) * Math.PI,
                             r =
-                                (a.noise3D(
-                                    (t / f) * M,
-                                    (e / 675) * M,
+                                (f.noise3D(
+                                    (t / u) * M,
+                                    (e / 630) * M,
                                     n / (2 * Math.PI)
                                 ) +
                                     1) *
@@ -537,58 +564,58 @@
                         return o ? A(n, r) : [n, r];
                     },
                     A = (t, e) => [Math.cos(t) * e, Math.sin(t) * e],
-                    P = ([t, e]) => t + e * d,
-                    I = ([t, e]) => [Math.floor(t / p), Math.floor(e / p)],
+                    P = ([t, e]) => t + e * m,
+                    S = ([t, e]) => [Math.floor(t / p), Math.floor(e / p)],
                     v = (t) => {
-                        const [e, o] = I(t);
+                        const [e, o] = S(t);
                         return P([e, o]);
                     },
-                    S = (t, e = !1) => {
+                    I = (t, e = !1) => {
                         const o = ((t) => {
-                            const [e, o] = I(t),
+                            const [e, o] = S(t),
                                 n = [];
                             for (let t = -1; t <= 1; t++)
                                 for (let r = -1; r <= 1; r++)
                                     if (
                                         e + t >= 0 &&
-                                        e + t <= d &&
+                                        e + t <= m &&
                                         o + r >= 0 &&
-                                        o + r <= m
+                                        o + r <= y
                                     ) {
-                                        const s = y[P([e + t, o + r])];
+                                        const s = b[P([e + t, o + r])];
                                         s && n.push(s);
                                     }
                             return n.flat();
                         })(t);
                         for (const n of o)
                             if (
-                                (!e || !h.isPointInPath(n[0], n[1])) &&
-                                q(n, t) < 4
+                                (!e || !a.isPointInPath(n[0], n[1])) &&
+                                x(n, t) < 4
                             )
                                 return !0;
                         return !1;
                     },
                     T = (t) => {
                         const [e, o] = t;
-                        return e < 20 || e > 1180 || o < 20 || o > 655;
+                        return e < 20 || e > 1180 || o < 20 || o > 610;
                     },
                     k = (t, e = t, o = 1, n = !0, r = 0) => {
-                        n && (h.beginPath(), h.moveTo(t[0], t[1]));
+                        n && (a.beginPath(), a.moveTo(t[0], t[1]));
                         const s = D(e);
                         let l = [e[0] + s[0] * o, e[1] + s[1] * o];
-                        S(l, !0) || T(l)
+                        I(l, !0) || T(l)
                             ? o > 0
-                                ? (h.moveTo(...t), (l = t), k(t, l, -1, !1))
-                                : ((h.lineWidth = 2),
-                                  (h.strokeStyle =
-                                      u[
+                                ? (a.moveTo(...t), (l = t), k(t, l, -1, !1))
+                                : ((a.lineWidth = 2),
+                                  (a.strokeStyle =
+                                      d[
                                           Math.round(
-                                              (D(t, !1)[1] / (2 * p)) * u.length
+                                              (D(t, !1)[1] / (2 * p)) * d.length
                                           )
                                       ]),
-                                  h.stroke(),
-                                  b.splice(b.indexOf(t), 1))
-                            : (n && y[v(e)].push(e),
+                                  a.stroke(),
+                                  g.splice(g.indexOf(t), 1))
+                            : (n && b[v(e)].push(e),
                               r % 5 == 0 &&
                                   ((t) => {
                                       const [e, o] = t,
@@ -602,27 +629,27 @@
                                               [e + r[1][0], o + r[1][1]],
                                           ];
                                       for (const t of s)
-                                          S(t, !1) || T(t) || b.push(t);
+                                          I(t, !1) || T(t) || g.push(t);
                                   })(e),
                               r++,
-                              y[v(l)].push(l),
-                              h.lineTo(l[0], l[1]),
+                              b[v(l)].push(l),
+                              a.lineTo(l[0], l[1]),
                               k(t, l, o, !1, r));
                     };
                 (i.style.background = "#27272E"),
                     ((t) => {
                         for (
                             t ||
-                                (t = ((t = 1200, e = 675) => [
-                                    g() * t,
-                                    g() * e,
+                                (t = ((t = 1200, e = 630) => [
+                                    w() * t,
+                                    w() * e,
                                 ])()),
-                                b.push(t);
-                            b.length > 0;
+                                g.push(t);
+                            g.length > 0;
 
                         ) {
-                            const t = (e = b)[Math.floor(g() * e.length)];
-                            S(t) ? b.splice(b.indexOf(t), 1) : k(t);
+                            const t = (e = g)[Math.floor(w() * e.length)];
+                            I(t) ? g.splice(g.indexOf(t), 1) : k(t);
                         }
                         var e;
                     })();

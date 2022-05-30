@@ -1,6 +1,12 @@
 import SimplexNoise from "simplex-noise";
 
-const headline = document.querySelector('.headline').innerHTML;
+const headline = document.querySelector(".headline--text").innerText;
+const subhead = document.querySelector(".subhead--text").innerText;
+
+//remove subhead element if empty
+if (subhead.length === 0 || subhead === "{subhead}") {
+    document.querySelector(".subhead--text").remove();
+}
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
@@ -8,7 +14,7 @@ const simplex = new SimplexNoise(headline);
 
 // hyperparameters
 const WIDTH = 1200;
-const HEIGHT = 675;
+const HEIGHT = 630;
 const MARGIN = 20;
 const DENSITY = 0.25;
 const NOISESCALE = 0.5;

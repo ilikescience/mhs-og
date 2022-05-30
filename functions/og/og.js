@@ -30,7 +30,7 @@ exports.handler = builder(async function (event, context) {
     );
     const browser = await puppeteer.launch({
         args: chromium.args,
-        defaultViewport: { height: 675, width: 1200 },
+        defaultViewport: { height: 630, width: 1200 },
         // when running locally, use local chrome
         executablePath:
             process.env.EXCECUTABLE_PATH || (await chromium.executablePath),
