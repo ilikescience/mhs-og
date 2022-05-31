@@ -25,7 +25,7 @@
 
             .textContainer {
                 width: 1200px;
-                height: 630px;
+                height: 675px;
                 position: absolute;
                 top: 0;
                 left: 0;
@@ -82,7 +82,7 @@
         </style>
     </head>
     <body>
-        <canvas width="1200" height="630"></canvas>
+        <canvas width="1200" height="675"></canvas>
         <div class="textContainer">
             <div class="headline">
                 <div class="section">
@@ -543,7 +543,7 @@
                     ],
                     p = 4 / Math.sqrt(2),
                     m = Math.ceil(u / p),
-                    y = Math.ceil(630 / p),
+                    y = Math.ceil(675 / p),
                     b = [...new Array(m * y)].map(() => []);
                 let q = 1;
                 const g = [],
@@ -552,11 +552,11 @@
                         Math.sqrt(Math.pow(t - o, 2) + Math.pow(e - n, 2)),
                     D = ([t, e], o = !0) => {
                         const n =
-                                f.noise2D((t / u) * M, (e / 630) * M) * Math.PI,
+                                f.noise2D((t / u) * M, (e / 675) * M) * Math.PI,
                             r =
                                 (f.noise3D(
                                     (t / u) * M,
-                                    (e / 630) * M,
+                                    (e / 675) * M,
                                     n / (2 * Math.PI)
                                 ) +
                                     1) *
@@ -597,7 +597,7 @@
                     },
                     T = (t) => {
                         const [e, o] = t;
-                        return e < 20 || e > 1180 || o < 20 || o > 610;
+                        return e < 20 || e > 1180 || o < 20 || o > 655;
                     },
                     k = (t, e = t, o = 1, n = !0, r = 0) => {
                         n && (a.beginPath(), a.moveTo(t[0], t[1]));
@@ -640,7 +640,7 @@
                     ((t) => {
                         for (
                             t ||
-                                (t = ((t = 1200, e = 630) => [
+                                (t = ((t = 1200, e = 675) => [
                                     w() * t,
                                     w() * e,
                                 ])()),

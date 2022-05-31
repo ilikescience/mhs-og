@@ -14,7 +14,7 @@ const simplex = new SimplexNoise(headline);
 
 // hyperparameters
 const WIDTH = 1200;
-const HEIGHT = 630;
+const HEIGHT = 675;
 const MARGIN = 20;
 const DENSITY = 0.25;
 const NOISESCALE = 0.5;
