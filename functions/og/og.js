@@ -3,10 +3,6 @@ const puppeteer = require("puppeteer-core");
 const { builder } = require("@netlify/functions");
 const fs = require("fs");
 
-const serif = fs
-    .readFileSync(`${__dirname}/_fonts/charter_regular.woff2`)
-    .toString("base64");
-
 const sans = fs
     .readFileSync(`${__dirname}/_fonts/inter_regular.woff2`)
     .toString("base64");
