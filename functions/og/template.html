@@ -1,122 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-        <style>
-            {CSS}
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      {CSS}
 
-            :root {
-                --foreground: #fff;
-                --background: #27272E;
-            }
-            body,
-            h1,
-            h2,
-            h3,
-            h4,
-            h5,
-            h6,
-            p,
-            ol,
-            ul {
-                margin: 0;
-                padding: 0;
-                font-weight: normal;
-            }
+      :root {
+          --foreground: #27272E;
+          --background: rgba(255, 255, 255, 0.8);
+      }
 
-            .textContainer {
-                width: 1200px;
-                height: 675px;
-                position: absolute;
-                top: 0;
-                left: 0;
-            }
+      html {
+          font-family: "Inter", system-ui, sans-serif;
+      }
 
-            .headline {
-                position: absolute;
-                bottom: 80px;
-                left: 80px;
-                right: 80px;
-            }
+      *,
+      *::before,
+      *::after {
+          box-sizing: border-box;
+      }
 
-            .section {
-                margin-bottom:20px;
-            }
+      body,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      ol,
+      ul {
+          margin: 0;
+          padding: 0;
+          font-weight: normal;
+      }
 
-            .headline--text{
-                display: inline;
-                color: var(--foreground);
-                font-size: 90px;
-                font-family: "Inter", serif;
-                background: var(--background);
-                padding: 0 20px 10px;
-                letter-spacing: -2px;
-                box-decoration-break: clone;
-                -webkit-box-decoration-break: clone;
-                line-height: 1.2;
-            }
-            .subhead--text{
-                display: inline;
-                color: var(--foreground);
-                font-size: 40px;
-                font-family: "Inter", serif;
-                background: var(--background);
-                padding: 0 20px 10px;
-                box-decoration-break: clone;
-                -webkit-box-decoration-break: clone;
-                line-height: 1.3;
-            }
-            .nametag {
-                display: inline;
-                font-size: 30px;
-                font-family: "Inter", sans-serif;
-                background: var(--background);
-                color: var(--foreground);
-                padding: 10px 20px;
-            }
+      .textContainer {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: flex-start;
+          height: 100vh;
+          padding: 60px;
+          gap: 20px;
+      }
 
-            .nametag svg {
-                display: inline-block;
-                vertical-align: -5px;
-                margin-right: 10px;
-            }
-        </style>
-    </head>
-    <body>
-        <canvas width="1200" height="675"></canvas>
-        <div class="textContainer">
-            <div class="headline">
-                <div class="section">
-                    <div class="nametag">
-                        <svg
-                            width="30px"
-                            height="30px"
-                            viewBox="0 0 50 50"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <circle
-                                cx="25"
-                                cy="25"
-                                r="25"
-                                fill="#ECD181"
-                            ></circle>
-                        </svg>
-                        <span>Matthew Ström</span>
-                    </div>
-                </div>
-                <div class="section">
-                    <div class="headline--text">{headline}</div>
-                </div>
-                <div class="section">
-                    <div class="subhead--text">{subhead}</div>
-                </div>
-            </div>
+      .headline--text,
+      .subhead--text,
+      .nametag {
+        color: var(--foreground);
+        background: var(--background);
+        padding: 10px 20px;
+        border-radius: 10px;
+        box-decoration-break: clone;
+        -webkit-box-decoration-break: clone;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+      }
+
+      .headline--text{
+          font-size: 50px;
+          font-weight: 600;
+          letter-spacing: -1px;
+          border-radius: 10px;
+          margin-bottom: 10px;
+      }
+      .subhead--text{
+          font-size: 30px;
+          letter-spacing: -0.8px;
+          border-radius: 10px;
+      }
+
+      .nametag {
+          display: flex;
+          font-size: 24px;
+          align-items: center;
+          gap: 15px;
+          border-radius: 10px;
+      }
+
+      .nametag--logo {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+      }
+
+      .nametag svg {
+          stroke: rgba(0, 0, 0, 0.5);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="textContainer">
+      <div class="section">
+        <div class="nametag">
+          <span>Matt Ström-Awn</span>
+          <div class="nametag--logo">
+            <svg
+              width="30px"
+              height="30px"
+              viewbox="0 0 50 50"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g>
+                <circle cx="25" cy="25" r="18" stroke-width="3px" fill="none" />
+              </g>
+            </svg>
+            <svg
+              width="30px"
+              height="30px"
+              viewbox="0 0 50 50"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g>
+                <line x1="5" y1="8" x2="45" y2="8" stroke-width="3px" />
+                <line x1="5" y1="15" x2="45" y2="15" stroke-width="3px" />
+                <line x1="5" y1="22" x2="45" y2="22" stroke-width="3px" />
+                <line x1="5" y1="29" x2="45" y2="29" stroke-width="3px" />
+                <line x1="5" y1="36" x2="45" y2="36" stroke-width="3px" />
+                <line x1="5" y1="43" x2="45" y2="43" stroke-width="3px" />
+              </g>
+            </svg>
+          </div>
         </div>
-        <script>
-            (()=>{var t={686:function(t){t.exports=function(){"use strict";return t.importState=function(e){var r=new t;return r.importState(e),r},t;function t(){return function(t){var r=0,n=0,o=0,a=1;0==t.length&&(t=[+new Date]);var s=e();r=s(" "),n=s(" "),o=s(" ");for(var l=0;l<t.length;l++)(r-=s(t[l]))<0&&(r+=1),(n-=s(t[l]))<0&&(n+=1),(o-=s(t[l]))<0&&(o+=1);s=null;var c=function(){var t=2091639*r+2.3283064365386963e-10*a;return r=n,n=o,o=t-(a=0|t)};return c.next=c,c.uint32=function(){return 4294967296*c()},c.fract53=function(){return c()+11102230246251565e-32*(2097152*c()|0)},c.version="Alea 0.9",c.args=t,c.exportState=function(){return[r,n,o,a]},c.importState=function(t){r=+t[0]||0,n=+t[1]||0,o=+t[2]||0,a=+t[3]||0},c}(Array.prototype.slice.call(arguments))}function e(){var t=4022871197,e=function(e){e=e.toString();for(var r=0;r<e.length;r++){var n=.02519603282416938*(t+=e.charCodeAt(r));n-=t=n>>>0,t=(n*=t)>>>0,t+=4294967296*(n-=t)}return 2.3283064365386963e-10*(t>>>0)};return e.version="Mash 0.9",e}}()}},e={};function r(n){var o=e[n];if(void 0!==o)return o.exports;var a=e[n]={exports:{}};return t[n].call(a.exports,a,a.exports,r),a.exports}r.n=t=>{var e=t&&t.__esModule?()=>t.default:()=>t;return r.d(e,{a:e}),e},r.d=(t,e)=>{for(var n in e)r.o(e,n)&&!r.o(t,n)&&Object.defineProperty(t,n,{enumerable:!0,get:e[n]})},r.o=(t,e)=>Object.prototype.hasOwnProperty.call(t,e),(()=>{"use strict";Math.sqrt(3),Math.sqrt(3);const t=1/6,e=(Math.sqrt(5),Math.sqrt(5),t=>0|Math.floor(t)),n=new Float64Array([1,1,0,-1,1,0,1,-1,0,-1,-1,0,1,0,1,-1,0,1,1,0,-1,-1,0,-1,0,1,1,0,-1,1,0,1,-1,0,-1,-1]);var o=r(686),a=r.n(o);const s=document.querySelector(".headline--text").innerText,l=document.querySelector(".subhead--text").innerText;0!==l.length&&"{subhead}"!==l||document.querySelector(".subhead--text").remove();const c=new(a())(s),u=document.querySelector("canvas"),f=u.getContext("2d"),h=function(r=Math.random){const o=function(t){const e=new Uint8Array(512);for(let t=0;t<256;t++)e[t]=t;for(let r=0;r<255;r++){const n=r+~~(t()*(256-r)),o=e[r];e[r]=e[n],e[n]=o}for(let t=256;t<512;t++)e[t]=e[t-256];return e}(r),a=new Float64Array(o).map((t=>n[t%12*3])),s=new Float64Array(o).map((t=>n[t%12*3+1])),l=new Float64Array(o).map((t=>n[t%12*3+2]));return function(r,n,c){let u,f,h,i;const p=.3333333333333333*(r+n+c),d=e(r+p),M=e(n+p),v=e(c+p),y=(d+M+v)*t,g=r-(d-y),m=n-(M-y),A=c-(v-y);let F,b,x,w,C,S;g>=m?m>=A?(F=1,b=0,x=0,w=1,C=1,S=0):g>=A?(F=1,b=0,x=0,w=1,C=0,S=1):(F=0,b=0,x=1,w=1,C=0,S=1):m<A?(F=0,b=0,x=1,w=0,C=1,S=1):g<A?(F=0,b=1,x=0,w=0,C=1,S=1):(F=0,b=1,x=0,w=1,C=1,S=0);const q=g-F+t,D=m-b+t,E=A-x+t,P=g-w+2*t,B=m-C+2*t,k=A-S+2*t,I=g-1+.5,T=m-1+.5,O=A-1+.5,j=255&d,_=255&M,U=255&v;let W=.6-g*g-m*m-A*A;if(W<0)u=0;else{const t=j+o[_+o[U]];W*=W,u=W*W*(a[t]*g+s[t]*m+l[t]*A)}let z=.6-q*q-D*D-E*E;if(z<0)f=0;else{const t=j+F+o[_+b+o[U+x]];z*=z,f=z*z*(a[t]*q+s[t]*D+l[t]*E)}let G=.6-P*P-B*B-k*k;if(G<0)h=0;else{const t=j+w+o[_+C+o[U+S]];G*=G,h=G*G*(a[t]*P+s[t]*B+l[t]*k)}let H=.6-I*I-T*T-O*O;if(H<0)i=0;else{const t=j+1+o[_+1+o[U+1]];H*=H,i=H*H*(a[t]*I+s[t]*T+l[t]*O)}return 32*(u+f+h+i)}}(c),i=(p=[["#EDEAE6","#27272E","#2D4771","#3b6db6","#4688e7","#319bbc","#19a290","#84b88d","#c6cf96","#F4DA7C","#FAC78F","#f79c7a","#f46161","#C14F87","#754F8D"],["#233147","#EDEAE6","#375C93","#377BA7","#319BBC","#19A290","#A0BE9A","#E2DDCF","#F7CA6F","#FC975A","#F46161","#C14F87","#754F8D","#5B5690"]])[Math.floor(c()*p.length)];var p;const d=document.querySelector(":root"),M=i.shift(),v=i.shift(),y=29*c()+1,g=96e-5*c()+4e-5,m=Math.ceil(600),A=Math.ceil(337.5),F=[...new Array(m*A)].map((()=>[]));d.style.setProperty("--foreground",v),d.style.setProperty("--background",M);const b=[],x=([t,e],r=!0)=>{const n=(1+h(t*g,e*g,0))*Math.PI;return r?w(3,n):[3,n]},w=(t,e)=>[Math.cos(e)*t,Math.sin(e)*t],C=([t,e])=>t+e*m,S=([t,e])=>[Math.floor(t/2),Math.floor(e/2)],q=t=>{F[(t=>{const[e,r]=S(t);return C([e,r])})(t)].push(t)},D=t=>E(t).filter((e=>(([t,e],[r,n])=>Math.sqrt(Math.pow(t-r,2)+Math.pow(e-n,2)))(e,t)<2)),E=t=>{const[e,r]=S(t),n=[];for(let t=-1;t<=1;t++)for(let o=-1;o<=1;o++)if(e+t>=0&&e+t<=m&&r+o>=0&&r+o<=A){const a=F[C([e+t,r+o])];a&&n.push(a)}return n.flat()},P=t=>0!==D(t).length,B=([t,e])=>t<20||t>1180||e<20||e>655,k=(t=1200,e=675)=>[c()*t,c()*e],I=([t,e],r=2)=>{const n=x([t,e],!1)[1],o=w(r,n+Math.PI/2),a=w(r,n-Math.PI/2);return[[t+o[0],e+o[1]],[t+a[0],e+a[1]]]},T=(t,e=1,r=-1,n=[],o=[])=>{if(0===n.length){n.push(t);const r=[t];for(let n=.5;n<=Math.ceil(e/2)+y;n++)for(const e of I(t,2*n))B(e)||(q(e),r.push(e));o.push(r)}const a=x(t),s=[t[0]+a[0]*r,t[1]+a[1]*r],l=[s];for(let t=.5;t<=Math.ceil(e/2+1);t++)for(const e of I(s,2*t))l.push(e);if(l.some(B)||l.some(P))if(-1===r)n.reverse(),o.reverse(),r=1,T(n[n.length-1],e,r,n,o);else{f.lineWidth=2*e,f.strokeStyle=i[Math.round(x(n[0],!1)[1]/(2*Math.PI)*i.length)],f.beginPath(),f.moveTo(...n[0]);for(let t=1;t<n.length;t++)f.lineTo(...n[t]);f.stroke()}else{if(l.map((t=>{q(t)})),n.push(s),n.length%4==0)for(const r of I(t,2*e+2*y*2))B(r)||b.push(r);T(s,e,r,n,o)}};u.style.background=M;const O=80*c(),j=Math.round(3*c()+1);for(let t=0;t<5*c();t++)T(k(),O);for(let t=0;t<20*c();t++)T(k(),O/3);for(let t=0;t<40*c();t++)T(k(),O/6);((t=k(),e=1)=>{for(b.push(t);b.length>0;){let t=b.pop();D(t).length>0||T(t,e)}})(k(),j)})()})();
-        </script>
-    </body>
+      </div>
+      <div class="section">
+        <div class="headline--text">{headline}</div>
+        <div class="subhead--text">{subhead}</div>
+      </div>
+    </div>
+  </body>
 </html>

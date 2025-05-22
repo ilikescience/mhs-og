@@ -1,3 +1,21 @@
 {
-	"siteId": "904361a7-4833-4bbf-825d-05ecad3f88cf"
+	"siteId": "904361a7-4833-4bbf-825d-05ecad3f88cf",
+	"geolocation": {
+		"data": {
+			"city": "Montclair",
+			"country": {
+				"code": "US",
+				"name": "United States"
+			},
+			"subdivision": {
+				"code": "NJ",
+				"name": "New Jersey"
+			},
+			"timezone": "America/New_York",
+			"latitude": 40.8125,
+			"longitude": -74.2135,
+			"postalCode": "07042"
+		},
+		"timestamp": 1747854554063
+	}
 }

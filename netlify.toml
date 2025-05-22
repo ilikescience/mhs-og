@@ -1,10 +1,5 @@
 [build]
   functions = "functions"
   publish = "deploy"
-[build.environment]
-  AWS_LAMBDA_JS_RUNTIME = "nodejs12.x"
-[[redirects]]
-  from = "/og/*"
-  to = "/.netlify/builders/og"
-  status = 200
-  force = true
+[functions]
+  external_node_modules = ["@sparticuz/chromium"]
