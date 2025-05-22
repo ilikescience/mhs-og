@@ -1,5 +1,10 @@
 [build]
   functions = "functions"
   publish = "deploy"
+[[redirects]]
+  from = "/og/*"
+  to = "/.netlify/builders/og"
+  status = 200
+  force = true
 [functions]
   external_node_modules = ["@sparticuz/chromium"]

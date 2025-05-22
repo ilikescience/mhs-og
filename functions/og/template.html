@@ -44,7 +44,7 @@
           justify-content: space-between;
           align-items: flex-start;
           height: 100vh;
-          padding: 60px;
+          padding: 60px 60px 100px;
           gap: 20px;
       }
 
@@ -52,31 +52,43 @@
       .subhead--text,
       .nametag {
         color: var(--foreground);
-        background: var(--background);
-        padding: 10px 20px;
-        border-radius: 10px;
         box-decoration-break: clone;
         -webkit-box-decoration-break: clone;
         backdrop-filter: blur(5px);
         -webkit-backdrop-filter: blur(5px);
       }
 
+      .headline--text,
+      .subhead--text,
+      .nametag--logo,
+      .nametag--text {
+        background: var(--background);
+                padding: 10px 20px;
+        border-radius: 10px;
+      }
+
       .headline--text{
-          font-size: 50px;
+          font-size: 60px;
           font-weight: 600;
           letter-spacing: -1px;
           border-radius: 10px;
           margin-bottom: 10px;
       }
       .subhead--text{
-          font-size: 30px;
+          font-size: 40px;
           letter-spacing: -0.8px;
           border-radius: 10px;
       }
 
+      .section--stretch {
+        align-self: stretch;
+        background: transparent;
+      }
+
       .nametag {
           display: flex;
-          font-size: 24px;
+          justify-content: space-between;
+          font-size: 35px;
           align-items: center;
           gap: 15px;
           border-radius: 10px;
@@ -88,6 +100,11 @@
           gap: 15px;
       }
 
+      .nametag--text {
+          letter-spacing: -0.8px;
+          color: #555;
+      }
+
       .nametag svg {
           stroke: rgba(0, 0, 0, 0.5);
       }
@@ -95,13 +112,13 @@
   </head>
   <body>
     <div class="textContainer">
-      <div class="section">
+      <div class="section section--stretch">
         <div class="nametag">
-          <span>Matt Ström-Awn</span>
+          <div class="nametag--text">Matt Ström-Awn</div>
           <div class="nametag--logo">
             <svg
-              width="30px"
-              height="30px"
+              width="40px"
+              height="40px"
               viewbox="0 0 50 50"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -110,8 +127,8 @@
               </g>
             </svg>
             <svg
-              width="30px"
-              height="30px"
+              width="40px"
+              height="40px"
               viewbox="0 0 50 50"
               xmlns="http://www.w3.org/2000/svg"
             >
